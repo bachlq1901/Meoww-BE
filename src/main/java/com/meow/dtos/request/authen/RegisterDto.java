@@ -12,7 +12,8 @@ import lombok.Setter;
 public class RegisterDto {
     private String firstName;
     private String lastName;
-    private String userName;
+    private String email;
+    private String phone;
     private String password;
-    private Long dateOfBirth;
+    private Long dateOfBirth = null;
 }

@@ -6,11 +6,9 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.meow.constants.ApplicationConstant;
 import com.meow.entities.User;
-import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.Objects;
 
 //helper class for handling with jwt token
 public class JwtUtil {
@@ -25,7 +23,6 @@ public class JwtUtil {
     public static final int ONE_HOUR = ONE_MINUTE * 60;
     public static final int ONE_DAY = ONE_HOUR * 24;
     public static final String EMAIL_CLAIM_KEY = "email";
-    public static final String FULL_NAME_CLAIM_KEY = "nick_name";
     public static final String ROLE_CLAIM_KEY = "role";
     private static final String SECRET_KEY = "WzC_01aSz@";
 
@@ -44,7 +41,7 @@ public class JwtUtil {
     public static String generateToken(User user, int expireAfter) {
         return JWT.create()
                 .withSubject(String.valueOf(user.getId()))
-                .withClaim(FULL_NAME_CLAIM_KEY, user.getUserName())
+                .withClaim(EMAIL_CLAIM_KEY, user.getEmail())
                 .withClaim(ROLE_CLAIM_KEY, user.getRole().name())
                 .withExpiresAt(new Date(System.currentTimeMillis() + expireAfter))
                 .sign(getAlgorithm());

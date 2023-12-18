@@ -24,9 +24,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Enums.Role role = Enums.Role.USER;
     @Column(unique = true)
-    private String userName;
+    private String email;
+    private String phone;
     private String password;
-    private Long dateOfBirth;
+    private Long dateOfBirth = null;
     private String firstName;
     private String lastName;
     private String nickName;
@@ -34,7 +35,7 @@ public class User {
 
     public User(RegisterDto registerDto, PasswordEncoder passwordEncoder){
         BeanUtils.copyProperties(registerDto, this);
-        this.setNickName(String.format("%s %s", registerDto.getFirstName(), registerDto.getFirstName()));
+        this.setNickName(String.format("%s %s", registerDto.getFirstName(), registerDto.getLastName()));
         this.setPassword(passwordEncoder.encode(registerDto.getPassword()));
     }
 }
