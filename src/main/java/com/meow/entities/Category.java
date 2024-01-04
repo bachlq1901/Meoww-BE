@@ -24,6 +24,7 @@ public class Category extends BaseEntity{
     private Long id;
     private String name;
     private BigDecimal totalMoney;
+    private BigDecimal totalRemainder = BigDecimal.ZERO;
 
     public Category(CategoryRequest request){
         BeanUtils.copyProperties(request, this);
