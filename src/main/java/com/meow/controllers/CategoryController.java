@@ -6,6 +6,10 @@ import com.meow.dtos.response.CategoryResponse;
 import com.meow.entities.Category;
 import com.meow.services.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,13 +30,12 @@ public class CategoryController {
 
     @GetMapping
     @PreAuthorize(ApplicationConstant.USER_ROLE)
-    public String test(){
-        return "aaaaaaa";
-    }
-
-    @GetMapping("test")
-    @PreAuthorize(ApplicationConstant.IS_AUTH)
-    public String test1(){
-        return "aaaaaaa";
+    public ResponseEntity<Page<Category>> getList(
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "limit", defaultValue = "10") Integer limit
+    ){
+        Pageable pageable = PageRequest.of(page, limit, Sort.by("created_at").descending());
+        Page<Category> categoryResponses = service.getList(pageable);
+        return new ResponseEntity<>(categoryResponses,HttpStatus.OK);
     }
 }
