@@ -34,7 +34,7 @@ public class CategoryController {
             @RequestParam(name = "page", defaultValue = "0") Integer page,
             @RequestParam(name = "limit", defaultValue = "10") Integer limit
     ){
-        Pageable pageable = PageRequest.of(page, limit, Sort.by("created_at").descending());
+        Pageable pageable = PageRequest.of(page, limit, Sort.by("createdAt").descending());
         Page<Category> categoryResponses = service.getList(pageable);
         return new ResponseEntity<>(categoryResponses,HttpStatus.OK);
     }
